@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ejemplo</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" media="all" />
+	</head>
+	<body>
+		<center>
+		<header>
+			<div id="htexto">
+				<h1>The Sprites concept</h1>
+				<h2>Pure Javascript</h2>
+			</div>
+		</header>
+		<section>
+		
+			<div id="nube1"></div>	
+			<div id="nube2"></div>
+			<div id="fizq"></div>
+			<div id="fder"></div>
+			<div id="cartoon"></div>
+		</section>
+		<footer>
+				<br />Copyright &copy; Carlos Posso - 2017
+		</footer>
+		</center>
+	</body>
+	<script>
+	var sprite1 = ["fish0.png","fish1.png","fish2.png","fish3.png"];
+	var figura = document.querySelector("#cartoon");		
+	var flechaIzq = document.querySelector("#fizq");
+	var flechaDer = document.querySelector("#fder");
+
+	var sec = 0;
+	var cartoonX = 60;
+	var cartoonY = 600;
+	var cloud1X = 200;
+	var cloud2X = 700;
+	var address1 = 1;
+	var address2 = 0;
+
+	function moverNubes()
+	{
+		var nub1 = document.querySelector("#nube1");
+		var nub2 = document.querySelector("#nube2");
+		
+		if(address1===1)
+		{
+			cloud1X += 1;
+			if(cloud1X < 1300)
+			{
+				nub1.style.marginLeft = cloud1X + "px";
+			}
+			else
+			{
+				address1 = 0;
+			}
+		}
+		else
+		{
+			cloud1X -= 1;
+			if(cloud1X >= 60)
+			{
+				nub1.style.marginLeft = cloud1X+"px";
+			}
+			else
+			{
+				address1 = 1;
+			}
+		}
+		
+		if(address2===1)
+		{
+			cloud2X += 1;
+			if(cloud2X < 1300)
+			{
+				nub2.style.marginLeft = cloud2X + "px";
+			}
+			else
+			{
+				address2 = 0;
+			}
+		}
+		else
+		{
+			cloud2X -= 1;
+			if(cloud2X >= 60)
+			{
+				nub2.style.marginLeft = cloud2X+"px";
+			}
+			else
+			{
+				address2 = 1;
+			}
+		}
+	}
+
+	//-----------------------------------------------------------------------
+	function moverCartoon( quien, dir )
+	{
+		if(dir===1)
+		{
+			cartoonX += 15;
+			sec<3 ? sec++ : sec=0 ;	
+			quien.style.transform = "scaleX(1)";		
+		}
+		else
+		{
+			cartoonX -= 15;
+			sec>=1 ? sec-- : sec=3 ;
+			quien.style.transform = "scaleX(-1)";		
+		}
+		quien.style.marginLeft = cartoonX+"px";
+		quien.style.backgroundImage = "url(images/" + sprite1[sec] + ")";
+	}
+	
+	//-----------------------------------------------------------------------
+	function teclado( event )
+	{
+		var HOME = 36;
+		var UP = 38;
+		var DOWN = 40;
+		var RIGHT = 39;
+		var LEFT = 37;	
+		var ENTER = 13;
+		var SPACE = 32;
+		var a = 65;
+		var A = 97;
+		var d = 68;
+		var D = 100;
+	
+		switch( event.keyCode )
+		{
+			case UP:			
+				break;
+
+			case DOWN:
+				break;
+
+			case a:
+			case A:
+			case LEFT:
+				moverCartoon(figura,0);
+				break;
+
+			case d:
+			case D:
+			case RIGHT:
+				moverCartoon(figura,1);
+				break;
+		}
+	}	
+	//=======================================================================
+	//
+	//=======================================================================
+	(function()
+	{		
+		window.setInterval( moverNubes, 100);
+		window.addEventListener("keydown", teclado, false);
+
+		
+		flechaDer.addEventListener("click",	function(){ moverCartoon(figura,1) }, false);
+		flechaIzq.addEventListener("click", function(){ moverCartoon(figura,0) }, false);
+		
+	}
+	());
+	</script>
+</html>
